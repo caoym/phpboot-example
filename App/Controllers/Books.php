@@ -27,6 +27,7 @@ class Books
      *
      * @throws BadRequestHttpException 参数错误, 如查询条件不存在等
      *
+     * @hook \App\Hooks\BasicAuth
      * @return Book[] 图书列表 {@bind response.content.books}
      */
     public function findBooks($search = [], &$total=0, $offset=0, $limit=100)

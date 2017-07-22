@@ -11,17 +11,17 @@ class Book
      * 书名
      * @var string
      */
-    public $name;
+    public $name='';
 
     /**
      * 简介
      * @var string
      */
-    public $brief;
+    public $brief='';
 
     /**
      * 图片url
      * @var string
      */
-    public $picture;
+    public $picture='';
 }
