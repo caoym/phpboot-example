@@ -4,9 +4,16 @@ namespace App\Entities;
 
 /**
  * 图书信息
+ * @table books
+ * @pk id
  */
 class Book
 {
+    /**
+     * @var int
+     * @v optional
+     */
+    public $id;
     /**
      * 书名
      * @var string
@@ -21,7 +28,7 @@ class Book
 
     /**
      * 图片url
-     * @var string
+     * @var string[]
      */
-    public $picture='';
+    public $pictures=[];
 }

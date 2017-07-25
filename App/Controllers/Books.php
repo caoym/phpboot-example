@@ -1,6 +1,9 @@
 <?php
 namespace App\Controllers;
 use App\Entities\Book;
+use PhpBoot\DB\DB;
+use PhpBoot\DI\Traits\EnableDIAnnotations;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -13,6 +16,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class Books
 {
+    use EnableDIAnnotations; //启用通过@inject标记注入依赖
     /**
      * 查找图书
      *
@@ -27,13 +31,16 @@ class Books
      *
      * @throws BadRequestHttpException 参数错误, 如查询条件不存在等
      *
-     * @hook \App\Hooks\BasicAuth
+     * \\@hook \App\Hooks\BasicAuth
      * @return Book[] 图书列表 {@bind response.content.books}
      */
     public function findBooks($search = [], &$total=0, $offset=0, $limit=100)
     {
-        $total = 1;
-        return [new Book()];
+        $query = \PhpBoot\model($this->db, Book::class)
+            ->where($search);
+        $total = $query->count();
+
+        return $query->limit($offset, $limit)->get();
     }
 
     /**
@@ -51,6 +58,34 @@ class Books
      */
     public function getBook($id)
     {
-        return new Book();
+        $book = \PhpBoot\model($this->db, Book::class)
+            ->find($id) or \PhpBoot\abort(new NotFoundHttpException("book $id not found"));
+        return $book;
     }
+
+    /**
+     * 新建图书
+     *
+     * 根据指定信息新建图书
+     *
+     * @route POST /
+     * @param Book $book {@bind request.request} 这里将post的内容绑定到 book 参数上
+     * @return string 返回新建图书的编号
+     */
+    public function createBook(Book $book)
+    {
+        $book->id = null;
+        return \PhpBoot\model($this->db, $book)->create();
+    }
+    /**
+     * @inject
+     * @var LoggerInterface
+     */
+    public $logger;
+
+    /**
+     * @inject
+     * @var DB
+     */
+    private $db;
 }
