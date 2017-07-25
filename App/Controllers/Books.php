@@ -74,8 +74,12 @@ class Books
      */
     public function createBook(Book $book)
     {
-        $book->id = null;
-        return \PhpBoot\model($this->db, $book)->create();
+        $this->logger->info("attempt to create book: ".json_encode($book));
+
+        \PhpBoot\model($this->db, $book)->create();
+
+        $this->logger->info("create book {$book->id} OK");
+        return $book->id;
     }
     /**
      * @inject
