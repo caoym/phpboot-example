@@ -17,30 +17,33 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class Books
 {
     use EnableDIAnnotations; //启用通过@inject标记注入依赖
+
+    /**
+     * @param LoggerInterface $logger 通过依赖注入传入
+     */
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger;
+    }
+
     /**
      * 查找图书
      *
-     * 根据查询条件获取一组图书
-     *
      * @route GET /
      *
-     * @param array $search 查找条件, 形式如?search[name]=书名&search[type]=1
-     * @param int $total 总结果集条数 {@bind response.content.total}
+     * @param string $name  查找书名
      * @param int $offset 结果集偏移 {@v min|0}
      * @param int $limit 返回结果最大条数 {@v max|1000}
      *
-     * @throws BadRequestHttpException 参数错误, 如查询条件不存在等
-     *
-     * \\@hook \App\Hooks\BasicAuth
-     * @return Book[] 图书列表 {@bind response.content.books}
+     * @throws BadRequestHttpException 参数错误
+     * @return Book[] 图书列表
      */
-    public function findBooks($search = [], &$total=0, $offset=0, $limit=100)
+    public function findBooks($name, $offset=0, $limit=100)
     {
-        $query = \PhpBoot\model($this->db, Book::class)
-            ->where($search);
-        $total = $query->count();
-
-        return $query->limit($offset, $limit)->get();
+        return \PhpBoot\model($this->db, Book::class)
+            ->where(['name'=>['LIKE'=>"%$name%"]])
+            ->limit($offset, $limit)
+            ->get();
     }
 
     /**

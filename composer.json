@@ -2,14 +2,16 @@
     "name": "caoym/phpboot-example",
     "description": "Examples of using phpboot",
     "keywords": [
-        "phpboot",
         "restful",
-        "boot"
+        "dependency-injection",
+        "orm",
+        "swagger",
+        "workflow"
     ],
     "license": "MIT",
     "require": {
         "php":">=5.5.9",
-        "caoym/phprs-restful": "2.0.x-dev"
+        "caoym/phpboot": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0"
