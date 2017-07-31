@@ -32,8 +32,8 @@ class Books
      * @route GET /
      *
      * @param string $name  查找书名
-     * @param int $offset 结果集偏移 {@v min|0}
-     * @param int $limit 返回结果最大条数 {@v max|1000}
+     * @param int $offset 结果集偏移 {@v min:0}
+     * @param int $limit 返回结果最大条数 {@v max:1000}
      *
      * @throws BadRequestHttpException 参数错误
      * @return Book[] 图书列表
