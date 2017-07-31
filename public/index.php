@@ -2,6 +2,7 @@
 use PhpBoot\Docgen\Swagger\Swagger;
 use PhpBoot\Docgen\Swagger\SwaggerProvider;
 use PhpBoot\Application;
+use PhpBoot\Controller\Hooks\Cors;
 
 ini_set('date.timezone','Asia/Shanghai');
 
@@ -14,6 +15,7 @@ require __DIR__.'/../vendor/autoload.php';
 $app = \PhpBoot\Application::createByDefault(
     __DIR__.'/../config/config.php'
 );
+$app->setGlobalHooks([Cors::class]);
 
 SwaggerProvider::register($app, function(Swagger $swagger)use($app){
     $swagger->schemes = ['http'];
