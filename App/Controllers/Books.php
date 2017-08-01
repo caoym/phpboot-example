@@ -73,10 +73,12 @@ class Books
      *
      * @route POST /
      * @param Book $book {@bind request.request} 这里将post的内容绑定到 book 参数上
+     * @throws BadRequestHttpException
      * @return string 返回新建图书的编号
      */
     public function createBook(Book $book)
     {
+        !$book->id or \PhpBoot\abort(new BadRequestHttpException("should not specify id while creating books"));
         $this->logger->info("attempt to create book: ".json_encode($book));
 
         \PhpBoot\model($this->db, $book)->create();
@@ -84,6 +86,46 @@ class Books
         $this->logger->info("create book {$book->id} OK");
         return $book->id;
     }
+
+    /**
+     * 修改图书
+     *
+     * 根据指定信息修改图书
+     *
+     * @route PUT /
+     * @param Book $book {@bind request.request} 这里将post的内容绑定到 book 参数上
+     * @throws BadRequestHttpException
+     * @return void
+     */
+    public function updateBook(Book $book)
+    {
+        $book->id or \PhpBoot\abort(new BadRequestHttpException("create "));
+        $this->logger->info("attempt to update book: ".json_encode($book));
+
+        \PhpBoot\model($this->db, $book)->update();
+
+        $this->logger->info("update book {$book->id} OK");
+    }
+
+    /**
+     * 删除图书
+     *
+     * 删除指定图书
+     *
+     * @route DELETE /{$id}
+     *
+     * @throws NotFoundHttpException 指定图书不存在
+     * @return void
+     */
+    public function deleteBook($id)
+    {
+        $this->logger->info("attempt to delete $id");
+
+        \PhpBoot\model($this->db, Book::class)->delete() or \PhpBoot\abort(new NotFoundHttpException("book $id not found"));
+
+        $this->logger->info("delete book $id OK");
+    }
+
     /**
      * @inject
      * @var LoggerInterface
