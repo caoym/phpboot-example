@@ -5,8 +5,8 @@ return [
     'host' => '118.190.86.50:8009',
 
     //DB
-    'DB.connection'=> 'sqlite:/'.__DIR__.'/../phpboot-example.db',
-    'DB.username'=> '',
-    'DB.password'=> '',
+    'DB.connection'=> 'mysql:dbname=phpboot-example;host=127.0.0.1',
+    'DB.username'=> 'root',
+    'DB.password'=> 'root',
     'DB.options' => []
 ];

@@ -106,14 +106,13 @@ class Books
 
         $this->logger->info("update book {$book->id} OK");
     }
-
     /**
      * 删除图书
      *
      * 删除指定图书
      *
      * @route DELETE /{id}
-     *
+     * @param string $id
      * @throws NotFoundHttpException 指定图书不存在
      * @return void
      */
