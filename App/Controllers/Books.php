@@ -120,7 +120,7 @@ class Books
     {
         $this->logger->info("attempt to delete $id");
 
-        \PhpBoot\model($this->db, Book::class)->delete() or \PhpBoot\abort(new NotFoundHttpException("book $id not found"));
+        \PhpBoot\model($this->db, Book::class)->delete($id) or \PhpBoot\abort(new NotFoundHttpException("book $id not found"));
 
         $this->logger->info("delete book $id OK");
     }
