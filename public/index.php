@@ -8,9 +8,14 @@ ini_set('date.timezone','Asia/Shanghai');
 
 require __DIR__.'/../vendor/autoload.php';
 
-////CLI 模式下模拟请求
-//$_SERVER['REQUEST_METHOD'] = 'GET';
-//$_SERVER['REQUEST_URI'] = '/docs/swagger.json';
+//CLI 模式下模拟请求
+$_SERVER['REQUEST_METHOD'] = 'GET';
+$_SERVER['REQUEST_URI'] = '/books/';
+$_GET=[
+    'name' => 'php',
+    'offset' => 0,
+    'limit' =>10
+];
 
 $app = \PhpBoot\Application::createByDefault(
     __DIR__.'/../config/config.php'
