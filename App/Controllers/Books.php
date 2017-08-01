@@ -34,16 +34,16 @@ class Books
      * @param string $name  查找书名
      * @param int $offset 结果集偏移 {@v min:0}
      * @param int $limit 返回结果最大条数 {@v max:1000}
-     *
+     * @param int $total 总条数 {@bind response.content.total}
      * @throws BadRequestHttpException 参数错误
-     * @return Book[] 图书列表
+     * @return Book[] 图书列表 {@bind response.content.books}
      */
-    public function findBooks($name, $offset=0, $limit=100)
+    public function findBooks($name, &$total, $offset=0, $limit=100)
     {
-        return \PhpBoot\model($this->db, Book::class)
-            ->where(['name'=>['LIKE'=>"%$name%"]])
-            ->limit($offset, $limit)
-            ->get();
+        $query = \PhpBoot\model($this->db, Book::class)
+            ->where(['name'=>['LIKE'=>"%$name%"]]);
+        $total = $query->count();
+        return $query->limit($offset, $limit)->get();
     }
 
     /**
