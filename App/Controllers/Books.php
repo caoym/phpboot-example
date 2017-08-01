@@ -95,7 +95,7 @@ class Books
      * @route PUT /
      * @param Book $book {@bind request.request} 这里将post的内容绑定到 book 参数上
      * @throws BadRequestHttpException
-     * @return void
+     * @return void 成功
      */
     public function updateBook(Book $book)
     {
@@ -112,7 +112,7 @@ class Books
      *
      * 删除指定图书
      *
-     * @route DELETE /{$id}
+     * @route DELETE /{id}
      *
      * @throws NotFoundHttpException 指定图书不存在
      * @return void
