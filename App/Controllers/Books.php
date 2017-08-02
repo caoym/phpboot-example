@@ -99,7 +99,7 @@ class Books
      */
     public function updateBook(Book $book)
     {
-        $book->id or \PhpBoot\abort(new BadRequestHttpException("create "));
+        $book->id or \PhpBoot\abort(new BadRequestHttpException("update {$book->id} failed"));
         $this->logger->info("attempt to update book: ".json_encode($book));
 
         \PhpBoot\model($this->db, $book)->update();
