@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 use App\Entities\Book;
+use PhpBoot\Application;
 use PhpBoot\DB\DB;
 use PhpBoot\DI\Traits\EnableDIAnnotations;
 use Psr\Log\LoggerInterface;
@@ -126,6 +127,19 @@ class Books
     }
 
     /**
+     * 演示上传文件
+     * @route POST /files/
+     * @param string $file {@bind request.files.file}
+     * @return string 文件 url
+     */
+    public function uploadFile($file)
+    {
+        $fileName = md5_file($file);
+        move_uploaded_file($file, __DIR__.'/../../public/upload/'.$fileName)
+            or \PhpBoot\abort('move_uploaded_file failed');
+        return 'http://'.$this->app->get('host').'/upload/'.$fileName;
+    }
+    /**
      * @inject
      * @var LoggerInterface
      */
@@ -136,4 +150,10 @@ class Books
      * @var DB
      */
     private $db;
+
+    /**
+     * @inject
+     * @var Application
+     */
+    private $app;
 }
