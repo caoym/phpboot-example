@@ -28,7 +28,6 @@ class Files
         $uploadFile = $uploadDir.'/'.$fileName;
 
         $uploadDir == dirname(realpath($uploadFile)) or \PhpBoot\abort(new BadRequestHttpException('invalid file name'));
-        $fileName = md5_file($file);
         move_uploaded_file($file, $uploadFile)
             or \PhpBoot\abort('move_uploaded_file failed');
 
