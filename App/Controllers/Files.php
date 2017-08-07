@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use PhpBoot\Application;
+use PhpBoot\DI\Traits\EnableDIAnnotations;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
@@ -11,6 +12,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 class Files
 {
+    use EnableDIAnnotations;
     /**
      * 上传文件
      *
@@ -25,7 +27,7 @@ class Files
         $uploadDir = realpath(__DIR__.'/../../public/upload/');
         $uploadFile = $uploadDir.'/'.$fileName;
 
-        $uploadDir == realpath($uploadFile) or \PhpBoot\abort(new BadRequestHttpException('invalid file name'));
+        $uploadDir == dirname(realpath($uploadFile)) or \PhpBoot\abort(new BadRequestHttpException('invalid file name'));
         $fileName = md5_file($file);
         move_uploaded_file($file, $uploadFile)
             or \PhpBoot\abort('move_uploaded_file failed');
