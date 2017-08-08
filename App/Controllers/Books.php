@@ -41,8 +41,8 @@ class Books
      */
     public function findBooks($name, &$total, $offset=0, $limit=100)
     {
-        $query = \PhpBoot\model($this->db, Book::class)
-            ->where(['name'=>['LIKE'=>"%$name%"]]);
+        $query = \PhpBoot\models($this->db, Book::class)
+            ->findWhere(['name'=>['LIKE'=>"%$name%"]]);
         $total = $query->count();
         return $query->limit($offset, $limit)->get();
     }
@@ -62,7 +62,7 @@ class Books
      */
     public function getBook($id)
     {
-        $book = \PhpBoot\model($this->db, Book::class)
+        $book = \PhpBoot\models($this->db, Book::class)
             ->find($id) or \PhpBoot\abort(new NotFoundHttpException("book $id not found"));
         return $book;
     }
@@ -121,7 +121,7 @@ class Books
     {
         $this->logger->info("attempt to delete $id");
 
-        \PhpBoot\model($this->db, Book::class)->delete($id) or \PhpBoot\abort(new NotFoundHttpException("book $id not found"));
+        \PhpBoot\models($this->db, Book::class)->delete($id) or \PhpBoot\abort(new NotFoundHttpException("book $id not found"));
 
         $this->logger->info("delete book $id OK");
     }
