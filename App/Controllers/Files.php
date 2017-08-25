@@ -31,12 +31,12 @@ class Files
         move_uploaded_file($file, $uploadFile)
             or \PhpBoot\abort('move_uploaded_file failed');
 
-        return 'http://'.$this->app->get('host').'/upload/'.$fileName;
+        return "http://{$this->host}/upload/.$fileName";
     }
 
     /**
-     * @inject
-     * @var Application
+     * @inject host
+     * @var string
      */
-    private $app;
+    private $host;
 }
