@@ -2,7 +2,7 @@
 
 return [
     //App
-    'host' => '118.190.86.50:8009',
+    'host' => 'example.phpboot.org',
 
     //DB
     'DB.connection'=> 'mysql:dbname=phpboot-example;host=127.0.0.1',

@@ -27,11 +27,11 @@ class Files
         $uploadDir = realpath(__DIR__.'/../../public/upload/');
         $uploadFile = $uploadDir.'/'.$fileName;
 
-        $uploadDir == dirname(realpath($uploadFile)) or \PhpBoot\abort(new BadRequestHttpException('invalid file name'));
+        $uploadDir == dirname($uploadFile) or \PhpBoot\abort(new BadRequestHttpException('invalid file name'));
         move_uploaded_file($file, $uploadFile)
             or \PhpBoot\abort('move_uploaded_file failed');
 
-        return "http://{$this->host}/upload/.$fileName";
+        return "http://{$this->host}/upload/$fileName";
     }
 
     /**
