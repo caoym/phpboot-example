@@ -15,9 +15,8 @@ return [
     注意这里的系统缓存指路由、依赖注入方式等信息的缓存, 而不是业务接口返回数据的缓存。
     所以这里不要使用 redis 等远程缓存
 
-    \Doctrine\Common\Cache\Cache::class =>
-    \DI\object(\Doctrine\Common\Cache\FilesystemCache::class)
-    ->constructorParameter('directory', sys_get_temp_dir()),
+    \Doctrine\Common\Cache\Cache::class => \DI\object(\Doctrine\Common\Cache\FilesystemCache::class)
+        ->constructorParameter('directory', sys_get_temp_dir()),
 
      ************************************************************************************/
 
@@ -31,7 +30,7 @@ return [
 
     //默认日志路径在此修改
     'defaultLoggerStream' => \DI\object(\Monolog\Handler\StreamHandler::class)
-            ->constructor('/tmp/example.phpboot.org.log', \Monolog\Logger::DEBUG),
+        ->constructor('/tmp/example.phpboot.org.log', \Monolog\Logger::DEBUG),
 
     \Psr\Log\LoggerInterface::class => \DI\object(\Monolog\Logger::class)
         ->constructor(\DI\get('AppName'))->method('pushHandler',\DI\get('defaultLoggerStream')),
