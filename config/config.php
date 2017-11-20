@@ -1,10 +1,16 @@
 <?php
-
+//@see PbpBoot\Application::createByDefault
 return [
-    //App
+    //The host (name or ip) serving the API, used by swagger docgen.
     'host' => 'example.phpboot.org',
 
-    //DB
+    //The App's name, default is "App", use by \Monolog\Logger as the logging channel
+    'App.name'  => 'phpboot-example',
+
+    //The prefix of api uri path, default is "/"
+    'App.uriPrefix' => '/',
+
+    //DB.* are the params for PDO::__construct, @see http://php.net/manual/en/pdo.construct.php
     'DB.connection'=> 'mysql:dbname=phpboot-example;host=127.0.0.1',
     'DB.username'=> 'root',
     'DB.password'=> 'root',
@@ -33,7 +39,7 @@ return [
         ->constructor('/tmp/example.phpboot.org.log', \Monolog\Logger::DEBUG),
 
     \Psr\Log\LoggerInterface::class => \DI\object(\Monolog\Logger::class)
-        ->constructor(\DI\get('AppName'))->method('pushHandler',\DI\get('defaultLoggerStream')),
+        ->constructor('example_phpboot_org')->method('pushHandler',\DI\get('defaultLoggerStream')),
 
     //异常输出类
     \PhpBoot\Controller\ExceptionRenderer::class =>

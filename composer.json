@@ -5,8 +5,7 @@
         "restful",
         "dependency-injection",
         "orm",
-        "swagger",
-        "workflow"
+        "swagger"
     ],
     "license": "MIT",
     "require": {
