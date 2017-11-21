@@ -21,7 +21,7 @@ class ExceptionRenderer
             return new Response(
                 $message,
                 $e->getStatusCode(),
-                ['Content-Type'=>'application/json']
+                $e->getHeaders()+['Content-Type'=>'application/json']
             );
         } if($e instanceof \InvalidArgumentException){
             return new Response($message, Response::HTTP_BAD_REQUEST, ['Content-Type'=>'application/json']);

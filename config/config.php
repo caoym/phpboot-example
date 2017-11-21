@@ -43,5 +43,9 @@ return [
 
     //异常输出类
     \PhpBoot\Controller\ExceptionRenderer::class =>
-        \DI\object(\App\Utils\ExceptionRenderer::class)
+        \DI\object(\App\Utils\ExceptionRenderer::class),
+
+    \App\Hooks\BasicAuth::class=> \DI\object()
+            ->property('username', 'test')
+            ->property('password', 'test')
 ];

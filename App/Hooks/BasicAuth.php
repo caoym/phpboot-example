@@ -22,9 +22,10 @@ class BasicAuth implements HookInterface
     public function handle(Request $request, callable $next)
     {
         $auth = $request->headers->get('Authorization');
-        $auth or \PhpBoot\abort(new UnauthorizedHttpException('Basic realm="PhpBoot Example"', 'Please login...'));
+        $auth or \PhpBoot\abort(new UnauthorizedHttpException('Basic realm="Please login with '."{$this->username}:{$this->password}".'"'));
         $auth = explode(' ', $auth);
-        $auth[1] == md5("{$this->username}:{$this->password}") or \PhpBoot\abort(new UnauthorizedHttpException('Basic realm="PhpBoot Example", "Invalid username or password!"'));
+        $auth = base64_decode($auth[1]);
+        $auth == "{$this->username}:{$this->password}" or \PhpBoot\abort(new UnauthorizedHttpException('Basic realm="Please login with '."{$this->username}:{$this->password}".'"'));
         return $next($request);
     }
 
