@@ -29,10 +29,21 @@ return [
     /************************************************************************************
     若需要在业务中使用 Redis,请打开此注释, 以便RedisCache可以通过依赖注入被 Controller 使用
 
-    \Redis::class => \DI\object()->method('connect', '127.0.0.1', 6379),
-    Doctrine\Common\Cache\RedisCache::class => \DI\object()->method('setRedis', \DI\get(\Redis::class)),
+    \Doctrine\Common\Cache\RedisCache::class => \DI\object()
+        ->method('setRedis', \DI\factory(function(){
+            $redis = new \Redis();
+            $redis->connect('127.0.0.1', 6379);
+            return $redis;
+        })),
 
-     ************************************************************************************/
+    // 并在需要的地方,通过依赖注入 redis 实例, 如:
+    // /**
+    //  * @inject
+    //  * @var \Doctrine\Common\Cache\RedisCache
+    //  */
+    //  private $redis;
+
+     /************************************************************************************/
 
     //默认日志路径在此修改
     'defaultLoggerStream' => \DI\object(\Monolog\Handler\StreamHandler::class)
@@ -45,7 +56,7 @@ return [
     \PhpBoot\Controller\ExceptionRenderer::class =>
         \DI\object(\App\Utils\ExceptionRenderer::class),
 
-    \App\Hooks\BasicAuth::class=> \DI\object()
+    \App\Hooks\BasicAuth::class => \DI\object()
             ->property('username', 'test')
             ->property('password', 'test')
 ];

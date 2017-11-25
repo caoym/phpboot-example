@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 use App\Entities\Book;
+use Doctrine\Common\Cache\RedisCache;
 use PhpBoot\Application;
 use PhpBoot\DB\DB;
 use PhpBoot\DI\Traits\EnableDIAnnotations;
@@ -137,5 +138,11 @@ class Books
      * @inject
      * @var DB
      */
-    private $db;
+    //private $db;
+
+    /**
+     * @inject
+     * @var RedisCache
+     */
+    private $redis;
 }
