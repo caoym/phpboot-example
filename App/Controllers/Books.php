@@ -138,7 +138,7 @@ class Books
      * @inject
      * @var DB
      */
-    //private $db;
+    private $db;
 
     /**
      * @inject
