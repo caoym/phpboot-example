@@ -58,5 +58,9 @@ return [
 
     \App\Hooks\BasicAuth::class => \DI\object()
             ->property('username', 'test')
-            ->property('password', 'test')
+            ->property('password', 'test'),
+
+    \App\Interfaces\BooksInterface::class => \DI\object(\PhpBoot\RPC\RpcProxy::class)
+        ->constructorParameter('interface', \App\Interfaces\BooksInterface::class)
+        ->constructorParameter('prefix', 'http://example.phpboot.org/')
 ];
